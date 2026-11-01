@@ -1,0 +1,42 @@
+Status of IKE charon daemon (strongSwan 5.9.13, Linux 7.0.0-31-generic, x86_64):
+  uptime: 91 seconds, since Oct 04 10:11:33 2026
+  malloc: sbrk 2928640, mmap 0, used 1227424, free 1701216
+  worker threads: 11 of 16 idle, 5/0/0/0 working, job queue: 0/0/0/0, scheduled: 3
+  loaded plugins: charon aesni aes rc2 sha2 sha1 md5 mgf1 random nonce x509 revocation constraints pubkey pkcs1 pkcs7 pkcs12 pgp dnskey sshkey pem openssl pkcs8 fips-prf gmp agent xcbc hmac kdf gcm drbg attr kernel-netlink resolve socket-default connmark forecast farp stroke updown eap-identity eap-aka eap-md5 eap-gtc eap-mschapv2 eap-dynamic eap-radius eap-tls eap-ttls eap-peap eap-tnc xauth-generic xauth-eap xauth-pam tnc-tnccs dhcp lookip error-notify certexpire led addrblock unity counters
+Listening IP addresses:
+  172.16.0.10
+  192.168.60.1
+Connections:
+hq-to-branch:  172.16.0.10...172.16.0.20  IKEv2, dpddelay=10s
+hq-to-branch:   local:  [172.16.0.10] uses public key authentication
+hq-to-branch:    cert:  "CN=172.16.0.10"
+hq-to-branch:   remote: [172.16.0.20] uses public key authentication
+hq-to-branch:   child:  192.168.10.0/24 === 192.168.20.0/24 TUNNEL, dpdaction=start
+Security Associations (1 up, 0 connecting):
+hq-to-branch[2]: ESTABLISHED 91 seconds ago, 172.16.0.10[172.16.0.10]...172.16.0.20[172.16.0.20]
+hq-to-branch[2]: IKEv2 SPIs: 3917d2dab0ae7ce9_i* 5b873feaef01f11d_r, public key reauthentication in 49 minutes
+hq-to-branch[2]: IKE proposal: AES_CBC_256/HMAC_SHA2_256_128/PRF_HMAC_SHA2_256/MODP_2048
+hq-to-branch{1}:  INSTALLED, TUNNEL, reqid 1, ESP SPIs: c91e6314_i cce159d8_o
+hq-to-branch{1}:  AES_CBC_256/HMAC_SHA2_256_128, 336 bytes_i (4 pkts, 88s ago), 336 bytes_o (4 pkts, 88s ago), rekeying in 18 minutes
+hq-to-branch{1}:   192.168.10.0/24 === 192.168.20.0/24
+Status of IKE charon daemon (strongSwan 5.9.13, Linux 7.0.0-31-generic, x86_64):
+  uptime: 92 seconds, since Oct 04 10:11:32 2026
+  malloc: sbrk 2920448, mmap 0, used 1242720, free 1677728
+  worker threads: 11 of 16 idle, 5/0/0/0 working, job queue: 0/0/0/0, scheduled: 3
+  loaded plugins: charon aesni aes rc2 sha2 sha1 md5 mgf1 random nonce x509 revocation constraints pubkey pkcs1 pkcs7 pkcs12 pgp dnskey sshkey pem openssl pkcs8 fips-prf gmp agent xcbc hmac kdf gcm drbg attr kernel-netlink resolve socket-default connmark forecast farp stroke updown eap-identity eap-aka eap-md5 eap-gtc eap-mschapv2 eap-dynamic eap-radius eap-tls eap-ttls eap-peap eap-tnc xauth-generic xauth-eap xauth-pam tnc-tnccs dhcp lookip error-notify certexpire led addrblock unity counters
+Listening IP addresses:
+  192.168.20.1
+  172.16.0.20
+Connections:
+branch-to-hq:  172.16.0.20...172.16.0.10  IKEv2, dpddelay=10s
+branch-to-hq:   local:  [172.16.0.20] uses public key authentication
+branch-to-hq:    cert:  "CN=172.16.0.20"
+branch-to-hq:   remote: [172.16.0.10] uses public key authentication
+branch-to-hq:   child:  192.168.20.0/24 === 192.168.10.0/24 TUNNEL, dpdaction=start
+Security Associations (1 up, 0 connecting):
+branch-to-hq[2]: ESTABLISHED 92 seconds ago, 172.16.0.20[172.16.0.20]...172.16.0.10[172.16.0.10]
+branch-to-hq[2]: IKEv2 SPIs: 3917d2dab0ae7ce9_i 5b873feaef01f11d_r*, public key reauthentication in 48 minutes
+branch-to-hq[2]: IKE proposal: AES_CBC_256/HMAC_SHA2_256_128/PRF_HMAC_SHA2_256/MODP_2048
+branch-to-hq{1}:  INSTALLED, TUNNEL, reqid 1, ESP SPIs: cce159d8_i c91e6314_o
+branch-to-hq{1}:  AES_CBC_256/HMAC_SHA2_256_128, 336 bytes_i (4 pkts, 89s ago), 336 bytes_o (4 pkts, 88s ago), rekeying in 18 minutes
+branch-to-hq{1}:   192.168.20.0/24 === 192.168.10.0/24

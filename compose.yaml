@@ -1,0 +1,362 @@
+services:
+
+  # ==========================================================
+  # HQ IPSEC
+  # ==========================================================
+  hq-ipsec:
+    build:
+      context: ./docker/ipsec
+
+    container_name: hq-ipsec
+    hostname: HQ-IPSEC
+
+    privileged: true
+
+    sysctls:
+      net.ipv4.ip_forward: "1"
+      net.ipv4.conf.all.rp_filter: "0"
+
+    environment:
+      REMOTE_PROTECTED_NET: "192.168.20.0/24"
+      REMOTE_WAN_IP: "172.16.0.20"
+
+      LOCAL_PROTECTED_NET: "192.168.10.0/24"
+      LOCAL_NEXT_HOP: "192.168.60.2"
+
+    volumes:
+      - ./configs/ipsec/hq/ipsec.conf:/etc/ipsec.conf:ro
+      - ./configs/ipsec/hq/ipsec.secrets:/etc/ipsec.secrets:ro
+      - ./configs/pki/certs/hq-cert.pem:/etc/ipsec.d/certs/hq-cert.pem:ro
+      - ./configs/pki/private/hq-key.pem:/etc/ipsec.d/private/hq-key.pem:ro
+      - ./configs/pki/cacerts/ca-cert.pem:/etc/ipsec.d/cacerts/ca-cert.pem:ro
+    networks:
+
+      wan:
+        ipv4_address: 172.16.0.10
+
+      hq_transit:
+        ipv4_address: 192.168.60.1
+
+
+  # ==========================================================
+  # BRANCH IPSEC
+  # ==========================================================
+  br-ipsec:
+    build:
+      context: ./docker/ipsec
+
+    container_name: br-ipsec
+    hostname: BR-IPSEC
+
+    privileged: true
+
+    sysctls:
+      net.ipv4.ip_forward: "1"
+      net.ipv4.conf.all.rp_filter: "0"
+
+    environment:
+      REMOTE_PROTECTED_NET: "192.168.10.0/24"
+      REMOTE_WAN_IP: "172.16.0.10"
+
+    volumes:
+      - ./configs/ipsec/branch/ipsec.conf:/etc/ipsec.conf:ro
+      - ./configs/ipsec/branch/ipsec.secrets:/etc/ipsec.secrets:ro
+      - ./configs/pki/certs/br-cert.pem:/etc/ipsec.d/certs/br-cert.pem:ro
+      - ./configs/pki/private/br-key.pem:/etc/ipsec.d/private/br-key.pem:ro
+      - ./configs/pki/cacerts/ca-cert.pem:/etc/ipsec.d/cacerts/ca-cert.pem:ro
+    networks:
+
+      wan:
+        ipv4_address: 172.16.0.20
+
+      branch:
+        ipv4_address: 192.168.20.1
+
+
+  # ==========================================================
+  # FIREWALL
+  # ==========================================================
+  firewall:
+    build:
+      context: ./docker/firewall
+
+    container_name: firewall
+    hostname: FIREWALL
+
+    privileged: true
+
+    sysctls:
+      net.ipv4.ip_forward: "1"
+
+      # Loose rp_filter: traffic enters/leaves via different interfaces (VPN, transit)
+      net.ipv4.conf.all.rp_filter: "0"
+
+    networks:
+
+      # WAN
+      wan:
+        ipv4_address: 172.16.0.30
+
+      # HQ-IPSEC <-> FIREWALL
+      hq_transit:
+        ipv4_address: 192.168.60.2
+
+      # FIREWALL <-> WG-GW
+      wg_transit:
+        ipv4_address: 192.168.70.2
+
+      # Application gateway
+      app:
+        ipv4_address: 192.168.10.1
+
+      # Management gateway
+      mgmt:
+        ipv4_address: 192.168.40.1
+
+      # Monitoring gateway
+      mon:
+        ipv4_address: 192.168.50.1
+  # ==========================================================
+  # APPLICATION
+  # ==========================================================
+  app:
+    build:
+      context: ./docker/internal-node
+
+    container_name: app
+    hostname: APP
+
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+
+    environment:
+      DEFAULT_GW: "192.168.10.1"
+
+    depends_on:
+      - firewall
+
+    networks:
+      app:
+        ipv4_address: 192.168.10.10
+
+
+  # ==========================================================
+  # MANAGEMENT
+  # ==========================================================
+  mgmt:
+    build:
+      context: ./docker/internal-node
+
+    container_name: mgmt
+    hostname: MGMT
+
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+
+    environment:
+      DEFAULT_GW: "192.168.40.1"
+
+    depends_on:
+      - firewall
+
+    networks:
+      mgmt:
+        ipv4_address: 192.168.40.10
+
+
+  # ==========================================================
+  # MONITORING
+  # ==========================================================
+  mon:
+    build:
+      context: ./docker/internal-node
+
+    container_name: mon
+    hostname: MON
+
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+
+    environment:
+      DEFAULT_GW: "192.168.50.1"
+
+    depends_on:
+      - firewall
+
+    networks:
+      mon:
+        ipv4_address: 192.168.50.10
+
+  # ==========================================================
+  # WIREGUARD GATEWAY
+  # ==========================================================
+  wg-gw:
+    build:
+      context: ./docker/wireguard
+
+    container_name: wg-gw
+    hostname: WG-GW
+
+    privileged: true
+
+    sysctls:
+      net.ipv4.ip_forward: "1"
+      net.ipv4.conf.all.rp_filter: "0"
+
+    environment:
+      ROLE: "gateway"
+
+    volumes:
+      - ./configs/wireguard/gateway/wg0.conf:/etc/wireguard/wg0.conf:ro
+
+    depends_on:
+      - firewall
+
+    networks:
+
+      wan:
+        ipv4_address: 172.16.0.100
+
+      wg_transit:
+        ipv4_address: 192.168.70.1
+
+  # ==========================================================
+  # WIREGUARD CLIENT A
+  # ==========================================================
+  client-a:
+    build:
+      context: ./docker/wireguard
+
+    container_name: client-a
+    hostname: CLIENT-A
+
+    privileged: true
+
+    environment:
+      ROLE: "client"
+
+    volumes:
+      - ./configs/wireguard/client-a/wg0.conf:/etc/wireguard/wg0.conf:ro
+
+    depends_on:
+      - wg-gw
+
+    networks:
+      wan:
+        ipv4_address: 172.16.0.101
+
+
+  # ==========================================================
+  # WIREGUARD CLIENT B
+  # ==========================================================
+  client-b:
+    build:
+      context: ./docker/wireguard
+
+    container_name: client-b
+    hostname: CLIENT-B
+
+    privileged: true
+
+    environment:
+      ROLE: "client"
+
+    volumes:
+      - ./configs/wireguard/client-b/wg0.conf:/etc/wireguard/wg0.conf:ro
+
+    depends_on:
+      - wg-gw
+
+    networks:
+      wan:
+        ipv4_address: 172.16.0.102
+
+  # ==========================================================
+  # KALI TESTER / WAN ATTACKER
+  # ==========================================================
+  kali-tester:
+    build:
+      context: ./docker/kali-tester
+
+    container_name: kali-tester
+    hostname: KALI-TESTER
+
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+
+    networks:
+      wan:
+        ipv4_address: 172.16.0.200
+
+
+# ============================================================
+# NETWORKS
+# ============================================================
+networks:
+
+  wan:
+    name: vpnlab-wan
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.16.0.0/24
+          gateway: 172.16.0.254
+
+
+  hq_transit:
+    name: vpnlab-hq-transit
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.60.0/24
+          gateway: 192.168.60.254
+
+
+  branch:
+    name: vpnlab-branch
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.20.0/24
+          gateway: 192.168.20.254
+
+
+  wg_transit:
+    name: vpnlab-wg-transit
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.70.0/24
+          gateway: 192.168.70.254
+
+
+  app:
+    name: vpnlab-app
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.10.0/24
+          gateway: 192.168.10.254
+
+
+  mgmt:
+    name: vpnlab-mgmt
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.40.0/24
+          gateway: 192.168.40.254
+
+
+  mon:
+    name: vpnlab-mon
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.50.0/24
+          gateway: 192.168.50.254
+

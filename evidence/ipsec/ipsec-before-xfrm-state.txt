@@ -1,0 +1,64 @@
+src 172.16.0.10 dst 172.16.0.20
+	proto esp spi 0xca18e0ec(3390628076) reqid 1(0x00000001) mode tunnel
+	replay-window 0 seq 0x00000000 flag af-unspec (0x00100000)
+	auth-trunc hmac(sha256) 0x8008ea1581ad7af47c1ba93b3bd098ed63b5a6bffcb82fa443a3183e282a5f02 (256 bits) 128
+	enc cbc(aes) 0x5b3404fc054785bca79da7b354b353e5963b4c8e57de9e62ba6ff4eaa25e7190 (256 bits)
+	anti-replay context: seq 0x0, oseq 0x0, bitmap 0x00000000
+	lifetime config:
+	  limit: soft (INF)(bytes), hard (INF)(bytes)
+	  limit: soft (INF)(packets), hard (INF)(packets)
+	  expire add: soft 2949(sec), hard 3600(sec)
+	  expire use: soft 0(sec), hard 0(sec)
+	lifetime current:
+	  0(bytes), 0(packets)
+	  add 2026-10-03 04:41:36 use -
+	stats:
+	  replay-window 0 replay 0 failed 0
+src 172.16.0.20 dst 172.16.0.10
+	proto esp spi 0xcfd88253(3487072851) reqid 1(0x00000001) mode tunnel
+	replay-window 32 seq 0x00000000 flag af-unspec (0x00100000)
+	auth-trunc hmac(sha256) 0xae115dad3227bfb474747b2dcee71118c15d59e8f0cfebfffca9fa030d17f4c5 (256 bits) 128
+	enc cbc(aes) 0x9f8e58568cd853159823d76c7504d556f7d1f807360344e9de7e14349d1061e0 (256 bits)
+	anti-replay context: seq 0x0, oseq 0x0, bitmap 0x00000000
+	lifetime config:
+	  limit: soft (INF)(bytes), hard (INF)(bytes)
+	  limit: soft (INF)(packets), hard (INF)(packets)
+	  expire add: soft 2973(sec), hard 3600(sec)
+	  expire use: soft 0(sec), hard 0(sec)
+	lifetime current:
+	  0(bytes), 0(packets)
+	  add 2026-10-03 04:41:36 use -
+	stats:
+	  replay-window 0 replay 0 failed 0
+src 172.16.0.10 dst 172.16.0.20
+	proto esp spi 0xc503f740(3305371456) reqid 1(0x00000001) mode tunnel
+	replay-window 0 seq 0x00000000 flag af-unspec (0x00100000)
+	auth-trunc hmac(sha256) 0x880c1289483639fa48139f77864d920ceb46e73480314419193354bcd41a06e4 (256 bits) 128
+	enc cbc(aes) 0x45ccf84e84c8b51d67ae9085ab902114e6619307077cf04ec5368c63e58415db (256 bits)
+	anti-replay context: seq 0x0, oseq 0x0, bitmap 0x00000000
+	lifetime config:
+	  limit: soft (INF)(bytes), hard (INF)(bytes)
+	  limit: soft (INF)(packets), hard (INF)(packets)
+	  expire add: soft 2538(sec), hard 3600(sec)
+	  expire use: soft 0(sec), hard 0(sec)
+	lifetime current:
+	  0(bytes), 0(packets)
+	  add 2026-10-03 04:41:36 use -
+	stats:
+	  replay-window 0 replay 0 failed 0
+src 172.16.0.20 dst 172.16.0.10
+	proto esp spi 0xc2c06110(3267387664) reqid 1(0x00000001) mode tunnel
+	replay-window 32 seq 0x00000000 flag af-unspec (0x00100000)
+	auth-trunc hmac(sha256) 0x7478825eaa88a05a2cac738132606186e1362558ac128324e50d0d17cf35db65 (256 bits) 128
+	enc cbc(aes) 0x234c3d2d7c803c837001a6416543e68a664676fd62d87821b58237ff7f3542bd (256 bits)
+	anti-replay context: seq 0x0, oseq 0x0, bitmap 0x00000000
+	lifetime config:
+	  limit: soft (INF)(bytes), hard (INF)(bytes)
+	  limit: soft (INF)(packets), hard (INF)(packets)
+	  expire add: soft 2978(sec), hard 3600(sec)
+	  expire use: soft 0(sec), hard 0(sec)
+	lifetime current:
+	  0(bytes), 0(packets)
+	  add 2026-10-03 04:41:36 use -
+	stats:
+	  replay-window 0 replay 0 failed 0

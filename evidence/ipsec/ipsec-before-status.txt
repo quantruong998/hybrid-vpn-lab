@@ -1,0 +1,26 @@
+Status of IKE charon daemon (strongSwan 5.9.13, Linux 7.0.0-31-generic, x86_64):
+  uptime: 40 minutes, since Oct 03 04:41:36 2026
+  malloc: sbrk 2703360, mmap 0, used 970624, free 1732736
+  worker threads: 11 of 16 idle, 5/0/0/0 working, job queue: 0/0/0/0, scheduled: 4
+  loaded plugins: charon aesni aes rc2 sha2 sha1 md5 mgf1 random nonce x509 revocation constraints pubkey pkcs1 pkcs7 pkcs12 pgp dnskey sshkey pem openssl pkcs8 fips-prf gmp agent xcbc hmac kdf gcm drbg attr kernel-netlink resolve socket-default connmark stroke updown eap-mschapv2 xauth-generic counters
+Listening IP addresses:
+  172.16.0.10
+  192.168.60.1
+Connections:
+hq-to-branch:  172.16.0.10...172.16.0.20  IKEv2
+hq-to-branch:   local:  [172.16.0.10] uses pre-shared key authentication
+hq-to-branch:   remote: [172.16.0.20] uses pre-shared key authentication
+hq-to-branch:   child:  192.168.10.0/24 === 192.168.20.0/24 TUNNEL
+Security Associations (2 up, 0 connecting):
+hq-to-branch[2]: ESTABLISHED 40 minutes ago, 172.16.0.10[172.16.0.10]...172.16.0.20[172.16.0.20]
+hq-to-branch[2]: IKEv2 SPIs: baf0d54720ae4a20_i* 7fa8a23ce75bb610_r, pre-shared key reauthentication in 2 hours
+hq-to-branch[2]: IKE proposal: AES_CBC_256/HMAC_SHA2_256_128/PRF_HMAC_SHA2_256/MODP_2048
+hq-to-branch{1}:  INSTALLED, TUNNEL, reqid 1, ESP SPIs: cfd88253_i ca18e0ec_o
+hq-to-branch{1}:  AES_CBC_256/HMAC_SHA2_256_128, 0 bytes_i, 0 bytes_o, rekeying in 8 minutes
+hq-to-branch{1}:   192.168.10.0/24 === 192.168.20.0/24
+hq-to-branch[1]: ESTABLISHED 40 minutes ago, 172.16.0.10[172.16.0.10]...172.16.0.20[172.16.0.20]
+hq-to-branch[1]: IKEv2 SPIs: 8b11bf85cdbfc9c8_i 7b6bc44e7ae10707_r*, pre-shared key reauthentication in 2 hours
+hq-to-branch[1]: IKE proposal: AES_CBC_256/HMAC_SHA2_256_128/PRF_HMAC_SHA2_256/MODP_2048
+hq-to-branch{2}:  INSTALLED, TUNNEL, reqid 1, ESP SPIs: c2c06110_i c503f740_o
+hq-to-branch{2}:  AES_CBC_256/HMAC_SHA2_256_128, 0 bytes_i, 0 bytes_o, rekeying in 2 minutes
+hq-to-branch{2}:   192.168.10.0/24 === 192.168.20.0/24

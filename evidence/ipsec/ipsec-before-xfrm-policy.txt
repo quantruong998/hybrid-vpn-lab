@@ -1,0 +1,122 @@
+src 192.168.10.0/24 dst 192.168.20.0/24 uid 0
+	dir out action allow index 81 priority 375423 share any flag  (0x00000000)
+	lifetime config:
+	  limit: soft (INF)(bytes), hard (INF)(bytes)
+	  limit: soft (INF)(packets), hard (INF)(packets)
+	  expire add: soft 0(sec), hard 0(sec)
+	  expire use: soft 0(sec), hard 0(sec)
+	lifetime current:
+	  0(bytes), 0(packets)
+	  add 2026-10-03 04:41:36 use -
+	tmpl src 172.16.0.10 dst 172.16.0.20
+		proto esp spi 0xca18e0ec(3390628076) reqid 1(0x00000001) mode tunnel
+		level required share any 
+		enc-mask ffffffff auth-mask ffffffff comp-mask ffffffff
+src 192.168.20.0/24 dst 192.168.10.0/24 uid 0
+	dir fwd action allow index 74 priority 375423 share any flag  (0x00000000)
+	lifetime config:
+	  limit: soft (INF)(bytes), hard (INF)(bytes)
+	  limit: soft (INF)(packets), hard (INF)(packets)
+	  expire add: soft 0(sec), hard 0(sec)
+	  expire use: soft 0(sec), hard 0(sec)
+	lifetime current:
+	  0(bytes), 0(packets)
+	  add 2026-10-03 04:41:36 use -
+	tmpl src 172.16.0.20 dst 172.16.0.10
+		proto esp spi 0x00000000(0) reqid 1(0x00000001) mode tunnel
+		level required share any 
+		enc-mask ffffffff auth-mask ffffffff comp-mask ffffffff
+src 192.168.20.0/24 dst 192.168.10.0/24 uid 0
+	dir in action allow index 64 priority 375423 share any flag  (0x00000000)
+	lifetime config:
+	  limit: soft (INF)(bytes), hard (INF)(bytes)
+	  limit: soft (INF)(packets), hard (INF)(packets)
+	  expire add: soft 0(sec), hard 0(sec)
+	  expire use: soft 0(sec), hard 0(sec)
+	lifetime current:
+	  0(bytes), 0(packets)
+	  add 2026-10-03 04:41:36 use -
+	tmpl src 172.16.0.20 dst 172.16.0.10
+		proto esp spi 0x00000000(0) reqid 1(0x00000001) mode tunnel
+		level required share any 
+		enc-mask ffffffff auth-mask ffffffff comp-mask ffffffff
+src 0.0.0.0/0 dst 0.0.0.0/0 uid 0
+	socket in action allow index 59 priority 0 share any flag  (0x00000000)
+	lifetime config:
+	  limit: soft 0(bytes), hard 0(bytes)
+	  limit: soft 0(packets), hard 0(packets)
+	  expire add: soft 0(sec), hard 0(sec)
+	  expire use: soft 0(sec), hard 0(sec)
+	lifetime current:
+	  0(bytes), 0(packets)
+	  add 2026-10-03 04:41:35 use 2026-10-03 04:41:36
+src 0.0.0.0/0 dst 0.0.0.0/0 uid 0
+	socket out action allow index 52 priority 0 share any flag  (0x00000000)
+	lifetime config:
+	  limit: soft 0(bytes), hard 0(bytes)
+	  limit: soft 0(packets), hard 0(packets)
+	  expire add: soft 0(sec), hard 0(sec)
+	  expire use: soft 0(sec), hard 0(sec)
+	lifetime current:
+	  0(bytes), 0(packets)
+	  add 2026-10-03 04:41:35 use 2026-10-03 04:41:36
+src 0.0.0.0/0 dst 0.0.0.0/0 uid 0
+	socket in action allow index 43 priority 0 share any flag  (0x00000000)
+	lifetime config:
+	  limit: soft 0(bytes), hard 0(bytes)
+	  limit: soft 0(packets), hard 0(packets)
+	  expire add: soft 0(sec), hard 0(sec)
+	  expire use: soft 0(sec), hard 0(sec)
+	lifetime current:
+	  0(bytes), 0(packets)
+	  add 2026-10-03 04:41:35 use 2026-10-03 04:41:36
+src 0.0.0.0/0 dst 0.0.0.0/0 uid 0
+	socket out action allow index 36 priority 0 share any flag  (0x00000000)
+	lifetime config:
+	  limit: soft 0(bytes), hard 0(bytes)
+	  limit: soft 0(packets), hard 0(packets)
+	  expire add: soft 0(sec), hard 0(sec)
+	  expire use: soft 0(sec), hard 0(sec)
+	lifetime current:
+	  0(bytes), 0(packets)
+	  add 2026-10-03 04:41:35 use 2026-10-03 04:41:35
+src ::/0 dst ::/0 uid 0
+	socket in action allow index 27 priority 0 share any flag  (0x00000000)
+	lifetime config:
+	  limit: soft 0(bytes), hard 0(bytes)
+	  limit: soft 0(packets), hard 0(packets)
+	  expire add: soft 0(sec), hard 0(sec)
+	  expire use: soft 0(sec), hard 0(sec)
+	lifetime current:
+	  0(bytes), 0(packets)
+	  add 2026-10-03 04:41:35 use -
+src ::/0 dst ::/0 uid 0
+	socket out action allow index 20 priority 0 share any flag  (0x00000000)
+	lifetime config:
+	  limit: soft 0(bytes), hard 0(bytes)
+	  limit: soft 0(packets), hard 0(packets)
+	  expire add: soft 0(sec), hard 0(sec)
+	  expire use: soft 0(sec), hard 0(sec)
+	lifetime current:
+	  0(bytes), 0(packets)
+	  add 2026-10-03 04:41:35 use -
+src ::/0 dst ::/0 uid 0
+	socket in action allow index 11 priority 0 share any flag  (0x00000000)
+	lifetime config:
+	  limit: soft 0(bytes), hard 0(bytes)
+	  limit: soft 0(packets), hard 0(packets)
+	  expire add: soft 0(sec), hard 0(sec)
+	  expire use: soft 0(sec), hard 0(sec)
+	lifetime current:
+	  0(bytes), 0(packets)
+	  add 2026-10-03 04:41:35 use -
+src ::/0 dst ::/0 uid 0
+	socket out action allow index 4 priority 0 share any flag  (0x00000000)
+	lifetime config:
+	  limit: soft 0(bytes), hard 0(bytes)
+	  limit: soft 0(packets), hard 0(packets)
+	  expire add: soft 0(sec), hard 0(sec)
+	  expire use: soft 0(sec), hard 0(sec)
+	lifetime current:
+	  0(bytes), 0(packets)
+	  add 2026-10-03 04:41:35 use -

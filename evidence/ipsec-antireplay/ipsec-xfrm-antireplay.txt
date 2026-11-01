@@ -1,0 +1,34 @@
+src 172.16.0.10 dst 172.16.0.20
+	proto esp spi 0xc096c458(3231106136) reqid 1(0x00000001) mode tunnel
+	replay-window 0 seq 0x00000000 flag af-unspec (0x00100000)
+	auth-trunc hmac(sha256) 0xa604f5fafb7da8905945614efd7310a253dcaf54572e01fcc4dcc417daa47c60 (256 bits) 128
+	enc cbc(aes) 0x8e4d743efe9701f12c73ca0ed5dca13acd88b2be0f54170b1f8266210ec7b7d6 (256 bits)
+	lastused 2026-10-04 12:14:58
+	anti-replay context: seq 0x0, oseq 0x5, bitmap 0x00000000
+	lifetime config:
+	  limit: soft (INF)(bytes), hard (INF)(bytes)
+	  limit: soft (INF)(packets), hard (INF)(packets)
+	  expire add: soft 1250(sec), hard 1800(sec)
+	  expire use: soft 0(sec), hard 0(sec)
+	lifetime current:
+	  420(bytes), 5(packets)
+	  add 2026-10-04 12:11:28 use 2026-10-04 12:14:54
+	stats:
+	  replay-window 0 replay 0 failed 0
+src 172.16.0.20 dst 172.16.0.10
+	proto esp spi 0xc2b7fb3e(3266837310) reqid 1(0x00000001) mode tunnel
+	replay-window 32 seq 0x00000000 flag af-unspec (0x00100000)
+	auth-trunc hmac(sha256) 0x6a984c3ef76a30217f9a18a7378dafb129fef279b992d3dc4cf2e2dd9ec68b3f (256 bits) 128
+	enc cbc(aes) 0x9d2964f312eb2f1323e5af519b29d49d61f34ca68f2f9cc1d3f461e661de12d3 (256 bits)
+	lastused 2026-10-04 12:14:58
+	anti-replay context: seq 0x5, oseq 0x0, bitmap 0x0000001f
+	lifetime config:
+	  limit: soft (INF)(bytes), hard (INF)(bytes)
+	  limit: soft (INF)(packets), hard (INF)(packets)
+	  expire add: soft 1222(sec), hard 1800(sec)
+	  expire use: soft 0(sec), hard 0(sec)
+	lifetime current:
+	  420(bytes), 5(packets)
+	  add 2026-10-04 12:11:28 use 2026-10-04 12:14:54
+	stats:
+	  replay-window 0 replay 0 failed 0

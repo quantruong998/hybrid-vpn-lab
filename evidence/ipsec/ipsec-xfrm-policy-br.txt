@@ -1,0 +1,28 @@
+src 192.168.20.0/24 dst 192.168.10.0/24 
+	dir out priority 375423 
+	tmpl src 172.16.0.20 dst 172.16.0.10
+		proto esp spi 0xc87f6545 reqid 1 mode tunnel
+src 192.168.10.0/24 dst 192.168.20.0/24 
+	dir fwd priority 375423 
+	tmpl src 172.16.0.10 dst 172.16.0.20
+		proto esp reqid 1 mode tunnel
+src 192.168.10.0/24 dst 192.168.20.0/24 
+	dir in priority 375423 
+	tmpl src 172.16.0.10 dst 172.16.0.20
+		proto esp reqid 1 mode tunnel
+src 0.0.0.0/0 dst 0.0.0.0/0 
+	socket in priority 0 
+src 0.0.0.0/0 dst 0.0.0.0/0 
+	socket out priority 0 
+src 0.0.0.0/0 dst 0.0.0.0/0 
+	socket in priority 0 
+src 0.0.0.0/0 dst 0.0.0.0/0 
+	socket out priority 0 
+src ::/0 dst ::/0 
+	socket in priority 0 
+src ::/0 dst ::/0 
+	socket out priority 0 
+src ::/0 dst ::/0 
+	socket in priority 0 
+src ::/0 dst ::/0 
+	socket out priority 0 
